@@ -1,0 +1,41 @@
+{
+	"code": 0,
+	"msg": "成功",
+	"data": [{
+		"name": "早餐类",
+		"type": 1,
+		"foods": [{
+			"id": "abc01",
+			"name": "红枣早餐奶(250ml)",
+			"price": 3.00,
+			"description": "营养早餐奶",
+			"icon": "http://img4.imgtn.bdimg.com/it/u=1443074820,2632005682&fm=27&gp=0.jpg"
+		}, {
+			"id": "abc02",
+			"name": "火腿肠",
+			"price": 2.50,
+			"description": "金华火腿",
+			"icon": "http://img2.imgtn.bdimg.com/it/u=3034126404,2401728486&fm=27&gp=0.jpg"
+		}]
+	}, {
+		"name": "家居用品",
+		"type": 2,
+		"foods": [{
+			"id": "1521701453296627507",
+			"name": "可湿水面巾纸",
+			"price": 5.50,
+			"description": "\t可湿水洗脸手帕纸单包",
+			"icon": "http://img0.imgtn.bdimg.com/it/u=2470501190,1330392592&fm=11&gp=0.jpg"
+		}]
+	}, {
+		"name": "饮料区",
+		"type": 4,
+		"foods": [{
+			"id": "1521701956355902950",
+			"name": "百事可乐-零度",
+			"price": 6.00,
+			"description": "DareforMore,突破渴望",
+			"icon": "https://cbu01.alicdn.com/img/ibank/2016/942/770/3082077249_600065101.310x310.jpg"
+		}]
+	}]
+}
