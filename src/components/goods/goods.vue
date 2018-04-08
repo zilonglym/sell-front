@@ -101,10 +101,10 @@
             exp.setTime(exp.getTime() + 3600 * 1000);//过期时间60分钟
             document.cookie = 'openid=' + openid + ";expires=" + exp.toGMTString();
         }
-        //获取openid
-        // if(getCookie('openid') == null) {
-        //      location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
-        // }
+        获取openid
+        if(getCookie('openid') == null) {
+             location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
+        }
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       let selectedGoods = window.selectedGoods;
       selectedGoods = selectedGoods ? JSON.parse(selectedGoods) : [];
