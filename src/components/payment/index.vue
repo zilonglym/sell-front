@@ -2,8 +2,9 @@
 	<div class="payment">
 	  <div class="user-info">
 			<div class="item"><label class="label">联系人</label><input placeholder="姓名" class="input" v-model="name" type="text"></div>
-			<div class="item"><label>联系电话</label><input placeholder="你的手机号" v-model="phone" type="text"></div>
-			<div class="item"><label>送餐地址</label><input placeholder="送餐地址" v-model="address" type="text"></div>
+			<div class="item"><label>联系电话</label><input placeholder="您的手机号" v-model="phone" type="text"></div>
+			<div class="item"><label>配送地址</label><input placeholder="自提无需填写" v-model="address" type="text"></div>
+			<div class="item"><label>备注</label><input placeholder="给店家的留言" v-model="comment" type="text"></div>
 		</div>
 		<div class="food-info">
 			<div class="card-hd"><img  class="avator" :src="seller.avatar"><span class="title">{{seller.name}}</span></div>
@@ -12,6 +13,15 @@
 				<label>{{item.name}}</label>
 				<div class="mount"><span class="number" v-if="item.count > 1">x{{item.count}}</span>¥{{item.count * item.price}}</div>
 			</div>
+		</div>
+		<div id="delivery-info">
+			<span>配送选择:</span>
+			<select v-model="selected">
+				<option v-for="option in options" v-bind:value="option.value">
+				{{ option.text }}
+				</option>
+			</select>
+			<span>配送费: ￥{{ selected }}</span>
 		</div>
 		<div class="footer">
 			<div class="money">待支付¥{{this.allPay}}</div>
@@ -29,14 +39,22 @@
 				seller: {},
 				name: '',
 				phone: '',
-				address: ''
+				address: '',
+				comment: '',
+				selected: '0.0',
+				options: [
+					{ text: '自提', value: '0.0' },
+					{ text: '1,2楼', value: '0.5' },
+					{ text: '3,4楼', value: '0.8' },
+					{ text: '5,6,7楼', value: '1.0' }
+            	]
 			};
 		},
 		computed: {
 			allPay() {
 				return this.selectedGoods.reduce((a, b) => {
 					return a + (b.count * b.price);
-				}, 0);
+				}, 0)+this.selected*1.0;
 			}
 		},
 		watch: {
@@ -57,7 +75,9 @@
                     'phone': this.phone,
                     'name': this.name,
                     'address': this.address,
-                    'items': JSON.stringify(goods)}
+					'comment': this.comment,
+					'items': JSON.stringify(goods),
+					'delivery': this.selected},
                 ).then((respones) => {
                     respones = respones.body;
                     if (respones.code == ERR_OK) {
