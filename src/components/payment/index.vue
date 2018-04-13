@@ -15,13 +15,14 @@
 			</div>
 		</div>
 		<div id="delivery-info">
-			<span>配送选择:</span>
+			<div class="item"><label>&nbsp;&nbsp;&nbsp;配送选择:</label>
 			<select v-model="selected">
 				<option v-for="option in options" v-bind:value="option.value">
 				{{ option.text }}
 				</option>
 			</select>
-			<span>配送费: ￥{{ selected }}</span>
+			<label>配送费: ￥{{ selected }}</label></div>
+			
 		</div>
 		<div class="footer">
 			<div class="money">待支付¥{{this.allPay}}</div>
@@ -168,6 +169,28 @@
 				}
 			}
 		}
+		// .delivery-info{
+		// 	margin-top: 10px;
+		// 	background-color: #fff;
+		// 	margin-bottom: 20px;
+		// 	.item {
+		// 		padding: 0 14px;
+		// 		display: flex;
+		// 		border-bottom: 1px solid #eee;
+		// 		label {
+		// 			display: inline-block;
+		// 			padding: 14px 0;
+		// 			flex: 1;
+		// 			color: #666;
+		// 		}
+		// 		.select{
+		// 			padding: 14px 0;
+		// 			display:inline-block;
+		// 			flex-basis: 93px;
+		// 			color: #333;
+		// 		}
+		// 	}
+		// }
 		.footer {
 			position: absolute;
 			bottom: 0;
