@@ -15,13 +15,14 @@
 			</div>
 		</div>
 		<div id="delivery-info">
-			<div class="item"><label>&nbsp;&nbsp;&nbsp;配送选择:</label>
-			<select v-model="selected">
-				<option v-for="option in options" v-bind:value="option.value">
+			<div class="item"><label>&nbsp;&nbsp;&nbsp;配送:&nbsp;</label>
+			<select v-model="selected" v-if="deliveryable()">
+				<option v-for="option in options" v-bind:value="option.value" >
 				{{ option.text }}
 				</option>
 			</select>
-			<label>配送费: ￥{{ selected }}</label></div>
+			<label v-if="!deliveryable()">自取</label>
+			<label>&nbsp;配送费: ￥{{ selected }}</label></div>
 			
 		</div>
 		<div class="footer">
@@ -48,7 +49,7 @@
 					{ text: '1,2楼', value: '0.5' },
 					{ text: '3,4楼', value: '0.8' },
 					{ text: '5,6,7楼', value: '1.0' }
-            	]
+            	]	
 			};
 		},
 		computed: {
@@ -56,6 +57,11 @@
 				return this.selectedGoods.reduce((a, b) => {
 					return a + (b.count * b.price);
 				}, 0)+this.selected*1.0;
+			},
+			goodPay() {
+				return this.selectedGoods.reduce((a, b) => {
+					return a + (b.count * b.price);
+				}, 0);
 			}
 		},
 		watch: {
@@ -93,6 +99,9 @@
 
                 window.selectedGoods = '[]';
                 // 支付成功清空localstorage selectedGoods
+			},
+			deliveryable: function(){
+				return parseFloat(this.goodPay)>parseFloat('25');
 			}
 		}
 	};
