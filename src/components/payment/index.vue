@@ -26,7 +26,7 @@
 			
 		</div>
 		<div class="footer">
-			<div class="money">待支付¥{{this.allPay}}</div>
+			<div class="money">待支付¥{{this.allPay.toFixed(2)}}</div>
 			<div class="btn-pay" @click="pay">支付</div>
 		</div>
 	</div>
