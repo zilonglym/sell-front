@@ -45,7 +45,7 @@
 				comment: '',
 				selected: '0.0',
 				options: [
-					{ text: '自提', value: '0.0' },
+					{ text: '自取', value: '0.0' },
 					{ text: '1,2楼', value: '0.5' },
 					{ text: '3,4楼', value: '0.8' },
 					{ text: '5,6,7楼', value: '1.0' }
