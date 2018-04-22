@@ -3,29 +3,34 @@
     <div class="goods">
       <div class="menu-wrapper" ref="menuWrapper">
         <ul>
-          <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
-              @click="selectMenu(index,$event)">
-          <span class="text border-1px">
-            <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
-          </span>
+          <li v-for="(item, index) in goods" class="menu-item" :class="{'current':currentIndex===index}">
+               <div @click="childCheck(index,$event)" class="parent" >
+                <span class="text border-1px">{{item.name}}
+                </span>
+                  <ul v-show=" index == i ">
+                    <li v-for="(li, subindex) in item.foods" class="menu-item">
+                      <span class="text border-1px" @click="subCheck(goods,index,subindex)">{{li.subname}}</span>
+                    </li>
+                  </ul>
+               </div>
           </li>
         </ul>
       </div>
       <div class="foods-wrapper" ref="foodsWrapper">
-        <ul>
+        <ul><!--大类-->
           <li v-for="item in goods" class="food-list" ref="foodList">
             <h1 class="title">{{item.name}}</h1>
-            <ul>
-              <li v-for="food in item.foods" class="food-item border-1px">
+            <ul><!--子类-->
+              <li v-for="subitem in item.foods" class="food-sublist" ref="foodsubList" >
+                <h1 class="title">{{item.name}}-{{subitem.subname}}</h1>
+                <ur><!--商品-->
+                  <li v-for="food in subitem.subfoods" class="food-item border-1px">
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
                 </div>
                 <div class="content">
                   <h2 class="name">{{food.name}}</h2>
                   <p class="desc">{{food.description}}</p>
-                  <!-- <div class="extra">
-                    <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
-                  </div> -->
                   <div class="price">
                     <span class="now">￥{{food.price}}</span><span class="old"
                                                                   v-show="food.oldPrice">￥{{food.oldPrice}}</span>
@@ -34,6 +39,8 @@
                     <cartcontrol @add="addFood" :food="food"></cartcontrol>
                   </div>
                 </div>
+              </li>
+                </ur>
               </li>
             </ul>
           </li>
@@ -67,6 +74,9 @@
         goods: [],
         listHeight: [],
         scrollY: 0,
+        i: -1,
+        //index: 1,
+        ishow: false,
         selectedFood: {}
       };
     },
@@ -85,9 +95,12 @@
         let foods = [];
         this.goods.forEach((good) => {
           good.foods.forEach((food) => {
-            if (food.count) {
-              foods.push(food);
-            }
+            food.subfoods.forEach((f) =>{
+              if (f.count) {
+                foods.push(f);
+              }
+            })
+            
           });
         });
         return foods;
@@ -113,7 +126,7 @@
         if (response.code === ERR_OK) {
           selectedGoods.map(item => {
             response.data.map((food, index) => {
-//              console.log(food);
+              // console.log(food);
               food.foods.map((foods, i) => {
                 // console.log(foods, item);
                 if (foods.id === item.id) {
@@ -125,7 +138,7 @@
             });
           });
           this.goods = response.data;
-//          console.log('hello world', this.goods);
+          // console.log('hello world', this.goods);
           this.$nextTick(() => {
             this._initScroll();
             this._calculateHeight();
@@ -134,6 +147,36 @@
       });
     },
     methods: {
+      subCheck(goods,index,subindex){
+        if (!event._constructed) {
+          return;
+        }
+        // let goodsList = goods;
+        //console.log(index);
+        let prefoodnumber=0;
+        for(let i=0;i<index;i++){
+          prefoodnumber +=this.goods[i].foods.length;
+          //console.log(this.goods[i].foods.length);
+        }
+        prefoodnumber += subindex;
+        //console.log(prefoodnumber);
+        let foodsubList = this.$refs.foodsubList;
+        //console.log(foodsubList); 
+        //console.log(subindex);
+        let el = foodsubList[prefoodnumber];
+        //console.log(el);
+        this.foodsScroll.scrollToElement(el, 300);
+      },
+      childCheck(index){
+        this.i = index
+        // if (!event._constructed) {
+        //   return;
+        // }
+        // let foodList = this.$refs.foodList;
+        // console.log(foodList);
+        // let el = foodList[index];
+        // this.foodsScroll.scrollToElement(el, 300);
+      },
       selectMenu(index, event) {
         if (!event._constructed) {
           return;
@@ -224,7 +267,6 @@
           position: relative
           z-index: 10
           margin-top: -1px
-          background: #fff
           font-weight: 700
           .text
             border-none()

@@ -11,7 +11,7 @@
                 <!---->
                 <div  class="buttons">
                     <button v-if="order.orderStatus == 0 && order.payStatus == 0" @click="pay(order.orderId)">去支付</button>
-                    <button v-if="order.orderStatus == 0" @click="cancelOrder(order.orderId)">{{cancelOrderName}}</button>
+                    <!-- <button v-if="order.orderStatus == 0" @click="cancelOrder(order.orderId)">{{cancelOrderName}}</button> -->
                 </div>
             </div>
             <div  class="restaurant-card" >
@@ -36,8 +36,11 @@
                     </ul>
                 </div>
                 <!---->
+                <div  class="deliveryprice listitem">
+                    配送费 &yen;{{order.orderDeliveryAmount}}
+                </div>
                 <div  class="finalprice listitem">
-                    实付 &yen;{{order.orderAmount}}
+                    商品金额 &yen;{{order.orderAmount}}
                 </div>
             </div>
             <div  class="detailcard" >
@@ -47,12 +50,13 @@
                         配送信息
                     </div>
                     <ul  class="cardlist">
-                        <li  class="listitem"><span >送达时间：</span> 尽快送达 </li>
-                        <li  class="listitem"><span >送货地址：</span>
+                        <li  class="listitem"><span >送达时间：</span> 将尽快送达 </li>
+                        <li  class="listitem"><span >送达：</span>
                             <div  class="content">
                                 <p >{{order.buyerName}}</p>
                                 <p >{{order.buyerPhone}}</p>
                                 <p >{{order.buyerAddress}}</p>
+                                <p >{{order.buyerComment}}</p>
                             </div></li>
                         <!---->
                     </ul>
@@ -117,7 +121,7 @@
              */
             orderStatusName: function (value) {
                 if (value == 0) {
-                    return '待接单'
+                    return '已购买'
                 }else if (value == 1) {
                     return '订单已完结'
                 }else if (value == 2){
