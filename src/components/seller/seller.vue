@@ -6,19 +6,21 @@
         <div class="desc border-1px">
           <star :size="36" :score="seller.score"></star>
           <span class="text">({{seller.ratingCount}})</span>
-          <span class="text">月售{{seller.sellCount}}单</span>
+          <!-- <span class="text">月售{{seller.sellCount}}单</span> -->
+          <span class="text">月售2000单</span>
         </div>
         <ul class="remark">
           <li class="block">
             <h2>起送价</h2>
             <div class="content">
-              <span class="stress">{{seller.minPrice}}</span>元
+              <!-- <span class="stress">{{seller.minPrice}}</span>元 -->
+              <span class="stress">25</span>元
             </div>
           </li>
           <li class="block">
             <h2>商家配送</h2>
             <div class="content">
-              <span class="stress">{{seller.deliveryPrice}}</span>元
+              <span class="stress">0.5-1</span>元
             </div>
           </li>
           <li class="block">
