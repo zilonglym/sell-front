@@ -27,7 +27,7 @@
       <i class="icon-keyboard_arrow_right"></i>
     </div>
     <div class="background">
-      <img :src="seller.avatar" width="100%" height="100%">
+      <img src="http://static.galileo.xiaojukeji.com\static\tms\seller_avatar_256px.jpg" width="100%" height="100%">
     </div>
     <transition name="fade">
       <div v-show="detailShow" class="detail">
