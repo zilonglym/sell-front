@@ -121,7 +121,7 @@
              */
             orderStatusName: function (value) {
                 if (value == 0) {
-                    return '已购买'
+                    return '已下单'
                 }else if (value == 1) {
                     return '订单已完结'
                 }else if (value == 2){
