@@ -46,9 +46,9 @@
 				selected: '0.0',
 				options: [
 					{ text: '自取', value: '0.0' },
-					{ text: '1,2楼', value: '0.01' },
-					{ text: '3,4楼', value: '0.8' },
-					{ text: '5,6,7楼', value: '1.0' }
+					{ text: '1,2楼', value: '0.3' },
+					{ text: '3,4楼', value: '0.5' },
+					{ text: '5,6,7楼', value: '0.6' }
             	]	
 			};
 		},
@@ -101,7 +101,7 @@
                 // 支付成功清空localstorage selectedGoods
 			},
 			deliveryable: function(){
-				return parseFloat(this.goodPay)>parseFloat('0.01');//25元起配送
+				return parseFloat(this.goodPay)>parseFloat('25.00');//25元起配送
 			}
 		}
 	};
@@ -158,6 +158,7 @@
 				border-bottom: 1px solid #eee;
 			}
 			.food-item {
+				height: 24px;
 				padding: 0 14px;
 				display: flex;
 				align-items: center;
@@ -221,6 +222,9 @@
 			}
 
 		}
+	}
+	html, body {
+		height: 100%;
 	}
 
 
