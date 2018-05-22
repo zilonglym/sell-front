@@ -107,7 +107,7 @@
     background: rgba(7, 17, 27, 0.5)
     .content-wrapper
       position: relative
-      padding: 24px 12px 18px 24px
+      padding: 10px 12px 12px 15px
       font-size: 0
       .avatar
         display: inline-block
