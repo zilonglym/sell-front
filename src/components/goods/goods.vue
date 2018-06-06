@@ -18,28 +18,37 @@
       </div>
       <div class="foods-wrapper" ref="foodsWrapper">
         <ul><!--大类-->
+          <div id="search"  class="search-item">
+            <input id="searchinput" type="text" class="search" value="" placeholder="  搜索" v-model.trim="title"/>
+          </div>
           <li v-for="item in goods" class="food-list" ref="foodList">
             <h1 class="title">{{item.name}}</h1>
             <ul><!--子类-->
               <li v-for="subitem in item.foods" class="food-sublist" ref="foodsubList" >
                 <h1 class="title">{{item.name}}-{{subitem.subname}}</h1>
                 <ur><!--商品-->
-                  <li v-for="food in subitem.subfoods" class="food-item border-1px">
-                <div class="icon">
-                  <img width="57" height="57" :src="food.icon">
-                </div>
-                <div class="content">
-                  <h2 class="name">{{food.name}}</h2>
-                  <p class="desc">{{food.description}}</p>
-                  <div class="price">
-                    <span class="now">￥{{food.price}}</span><span class="old"
-                                                                  v-show="food.oldPrice">￥{{food.oldPrice}}</span>
-                  </div>
-                  <div class="cartcontrol-wrapper">
-                    <cartcontrol @add="addFood" :food="food"></cartcontrol>
-                  </div>
-                </div>
-              </li>
+                  <!-- <li v-for="food in subitem.subfoods" class="food-item border-1px" > -->
+                  <li v-for="food in subitem.subfoods" class="active"  >
+                    <!-- <div class="subIsShow" v-show="isShow"> food.name.indexOf('1')>-1  -->
+                    <!-- <div class="icon" v-show="this.title? food.name.indexOf(this.title)>-1:true"> -->
+                    <div class="icon" v-show="toshow(food.name)">
+                      <img width="57" height="57" :src="food.icon">
+                    </div>
+                    <!-- <div class="content" v-show="this.title? food.name.indexOf(this.title)>-1:true"> -->
+                    <div class="content" v-show="toshow(food.name)">
+                      <h2 class="name">{{food.name}}</h2>
+                      <p class="desc">{{food.description}}</p>
+                      <div class="price">
+                        <span class="now">￥{{food.price}}</span><span class="old"
+                                                                      v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                      </div>
+                      <div class="cartcontrol-wrapper">
+                        <cartcontrol @add="addFood" :food="food"></cartcontrol>
+                      </div>
+                    </div>
+                  <!-- </div>  -->
+                    
+                  </li>
                 </ur>
               </li>
             </ul>
@@ -49,7 +58,7 @@
       <shopcart ref="shopcart" :selectFoods="selectFoods"  :deliveryPrice="seller.deliveryPrice"
                 :minPrice="seller.minPrice" :seller="seller"></shopcart>
     </div>
-    <food @add="addFood" :food="selectedFood"  ref="food"></food>
+    <!-- <food @add="addFood" :food="selectedFood"  ref="food"></food> -->
   </div>
 </template>
 
@@ -57,8 +66,9 @@
   import BScroll from 'better-scroll';
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
-  import food from 'components/food/food';
+  // import food from 'components/food/food';
   var config = require('config')
+  
   config = process.env.NODE_ENV === 'development' ? config.dev : config.build
   const ERR_OK = 0;
 
@@ -70,8 +80,9 @@
     },
     data() {
       return {
-        selectedFoods: {},
+        isShow:true,
         goods: [],
+        title: '',
         listHeight: [],
         scrollY: 0,
         i: -1,
@@ -100,7 +111,6 @@
                 foods.push(f);
               }
             })
-            
           });
         });
         return foods;
@@ -115,9 +125,9 @@
           document.cookie = 'openid=' + openid + ";expires=" + exp.toGMTString();
       }
       //获取openid
-      if(getCookie('openid') == null) {
-          location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
-      }
+      // if(getCookie('openid') == null) {
+      //     location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
+      // }
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       let selectedGoods = window.selectedGoods;
       selectedGoods = selectedGoods ? JSON.parse(selectedGoods) : [];
@@ -146,36 +156,75 @@
         }
       });
     },
+    watch: {
+    //watch search change
+      title() {
+        delay(() => {
+          this.fetchData();
+        }, 300);
+      },
+    },
     methods: {
+      toshow(val){
+        return val.indexOf(this.title)>-1;
+      },
+      async fetchData(val) {
+        // this.testClass = {
+        //                 active: 0 === 0,
+        //                 unactive: 0 === 1
+        //             };
+        // if(this.title){
+        //   this.isShow=false;
+        //   this.setClass='active';
+        //   console.log('active');
+        // }else{
+        //   this.isShow=true;
+        //   console.log('default');
+        // }
+        
+        // this.$set(this.goods,'active',true);
+        // this.setClass();
+        // console.log(this.goods[0].foods[0].subfoods[0].name);
+        // this.goods[0].foods[0].subfoods[0].name='test2';
+        // this.$set(;
+        
+        // console.log(this.$set(subitem.subfoods,0,));
+        // console.log(this.$refs.shopcart.selectFoods);
+        
+        // let selectedGoods = window.selectedGoods;
+        // selectedGoods = selectedGoods ? JSON.parse(selectedGoods) : [];
+        // this.$http.get('/sell/buyer/product/listForName?name='+this.title).then((response) => {
+        //   response = response.body;
+        //   if (response.code === ERR_OK) {
+        //     selectedGoods.map(item => {
+        //       response.data.map((food, index) => {
+        //         food.foods.map((foods, i) => {
+        //           if (foods.id === item.id) {
+        //             food.foods.splice(i, 1, Object.assign(food.foods[i], {count: item.count}));
+        //             response.data.splice(index, 1, food);
+        //           }
+        //         });
+        //       });
+        //     });
+        //     this.goods = response.data;
+        //   }
+        // });
+      },
       subCheck(goods,index,subindex){
         if (!event._constructed) {
           return;
         }
-        // let goodsList = goods;
-        //console.log(index);
         let prefoodnumber=0;
         for(let i=0;i<index;i++){
           prefoodnumber +=this.goods[i].foods.length;
-          //console.log(this.goods[i].foods.length);
         }
         prefoodnumber += subindex;
-        //console.log(prefoodnumber);
         let foodsubList = this.$refs.foodsubList;
-        //console.log(foodsubList); 
-        //console.log(subindex);
         let el = foodsubList[prefoodnumber];
-        //console.log(el);
         this.foodsScroll.scrollToElement(el, 300);
       },
       childCheck(index){
         this.i = index
-        // if (!event._constructed) {
-        //   return;
-        // }
-        // let foodList = this.$refs.foodList;
-        // console.log(foodList);
-        // let el = foodList[index];
-        // this.foodsScroll.scrollToElement(el, 300);
       },
       selectMenu(index, event) {
         if (!event._constructed) {
@@ -228,8 +277,7 @@
     },
     components: {
       shopcart,
-      cartcontrol,
-      food
+      cartcontrol
     }
   };
 
@@ -241,6 +289,14 @@
       else
           return null;
   }
+  // 节流函数
+  const delay = (function() {
+    let timer = 0;
+    return function(callback, ms) {
+      clearTimeout(timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
@@ -249,7 +305,7 @@
   .goods
     display: flex
     position: absolute
-    top: 159px
+    top: 139px
     bottom: 46px
     width: 100%
     overflow: hidden
@@ -304,10 +360,10 @@
         font-size: 12px
         color: rgb(147, 153, 159)
         background: #f3f5f7
-      .food-item
+      .active
         display: flex
-        margin: 9px
-        padding-bottom: 1px
+        margin: 0px
+        padding-bottom: 0px
         border-1px(rgba(7, 17, 27, 0.1))
         &:last-child
           border-none()
@@ -321,11 +377,11 @@
             margin: 2px 0 8px 0
             height: 17px
             line-height: 17px
-            font-size: 17px
+            font-size: 16px
             color: rgb(7, 17, 27)
           .desc, .extra
             line-height: 10px
-            font-size: 13px
+            font-size: 12px
             color: rgb(147, 153, 159)
           .desc
             line-height: 6px
@@ -348,4 +404,12 @@
             position: absolute
             right: 0
             bottom: 12px
+      .search-item
+        font-size: 14px
+        border-1px(rgba(27, 17, 27, 0.1))
+        .search
+          width: 100%
+          height: 20px
+          text-align: left;
+          border-radius: 5px
 </style>

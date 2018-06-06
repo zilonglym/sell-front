@@ -13,9 +13,6 @@
           <router-link to="/seller">商家</router-link>
         </div>
       </div>
-      <div id="search"  class="search-item">
-        <input type="text" class="search"  placeholder="搜索                                           "/>
-      </div>
     </template>
 
     <router-view :seller="seller" :showHeader="showHeader"></router-view>
@@ -90,12 +87,4 @@
         color: rgb(77, 85, 93)
         &.active
           color: rgb(240, 20, 20)
-  .search-item
-    font-size: 14px
-    border-1px(rgba(27, 17, 27, 0.1))
-    .search
-      width: 100%
-      height: 20px
-      text-align: right;
-      border-radius: 5px
 </style>
