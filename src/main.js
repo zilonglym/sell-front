@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuex from 'vuex'
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import App from './App';
@@ -8,13 +9,19 @@ import seller from 'components/seller/seller';
 import payment from 'components/payment';
 import orderList from 'components/order/list';
 import orderDetail from 'components/order/detail';
+import store from './vuex/store'
 
 
 import 'common/stylus/index.styl';
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
+Vue.use(Vuex);
 Vue.http.options.emulateJSON = true;
+
+
+
+
 
 const routes = [{
   path: '/',
@@ -47,6 +54,7 @@ const router = new VueRouter({
 /* eslint-disable no-new */
 window.bvue = new Vue({
   el: '#app',
+  store,
   router,
   render: h => h(App)
 });

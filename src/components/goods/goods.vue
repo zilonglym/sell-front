@@ -18,9 +18,6 @@
       </div>
       <div class="foods-wrapper" ref="foodsWrapper">
         <ul><!--大类-->
-          <div id="search"  class="search-item">
-            <input id="searchinput" type="text" class="search" value="" placeholder="                        搜索" v-model.trim="title"/>
-          </div>
           <li v-for="item in goods" class="food-list" ref="foodList">
             <h1 class="title">{{item.name}}</h1>
             <ul><!--子类-->
@@ -156,17 +153,11 @@
         }
       });
     },
-    watch: {
-    //watch search change
-      title() {
-        delay(() => {
-          this.fetchData();
-        }, 300);
-      },
-    },
+
     methods: {
-      toshow(val){
-        return val.indexOf(this.title)>-1;
+      toshow(val,content){
+        //console.log(this.$store.state.searchContent);
+        return val.indexOf(this.$store.state.searchContent)>-1;
       },
       async fetchData(val) {
         // this.testClass = {
@@ -305,7 +296,7 @@
   .goods
     display: flex
     position: absolute
-    top: 139px
+    top: 169px
     bottom: 46px
     width: 100%
     overflow: hidden
@@ -404,13 +395,5 @@
             position: absolute
             right: 0
             bottom: 12px
-      .search-item
-        font-size: 14px
-        border-1px(rgba(27, 17, 27, 0.1))
-        .search
-          width: 100%
-          height: 30px
-          font-weight: 500
-          text-align: left;
-          border-radius: 5px
+
 </style>

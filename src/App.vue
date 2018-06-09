@@ -2,6 +2,9 @@
   <div>
     <template v-if="showHeader">
       <v-header :seller="seller"></v-header>
+          <div id="search"  class="search-item">
+            <input id="searchinput" type="text" class="search" value="" placeholder="搜索" v-model.trim="title"/>
+          </div>
       <div class="tab border-1px">
         <div class="tab-item">
           <router-link to="/goods">商品</router-link>
@@ -34,10 +37,18 @@
             return queryParam.id;
           })()
         },
-        showHeader: true
+        showHeader: true,
+        title: ''
       };
     },
     methods: {
+      setContent(){
+        //console.log(this.title);
+        this.$store.state.searchContent = this.title;
+      },
+      async fetchData(val) {
+        this.$store.state.searchContent = this.title;
+      },
       changeHash() {
         const hash = window.location.hash;
         if (hash.indexOf('payment') > -1
@@ -46,6 +57,15 @@
         } else {
           this.showHeader = true;
         }
+      }
+    },
+    watch: {
+    //watch search change
+      title: function() {
+        //console.log(this.title);
+        delay(() => {
+          this.fetchData();
+        }, 300);
       }
     },
     created() {
@@ -66,11 +86,28 @@
       'v-header': header
     }
   };
+    // 节流函数
+  const delay = (function() {
+    let timer = 0;
+    return function(callback, ms) {
+      clearTimeout(timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "./common/stylus/mixin.styl"
 
+  .search-item
+    font-size: 14px
+    border-1px(rgba(27, 17, 27, 0.1))
+    .search
+      width: 100%
+      height: 30px
+      font-weight: 500
+      text-align: center;
+      border-radius: 5px
   .tab
     display: flex
     width: 100%
