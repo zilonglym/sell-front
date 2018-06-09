@@ -125,7 +125,7 @@
       payDesc() {
         if (this.totalPrice === 0) {
           //return `￥${this.minPrice}元起送`;
-          return `￥25元起送`;
+          return `去结算`;
         } else if (this.totalPrice < this.minPrice) {
           let diff = this.minPrice - this.totalPrice;
           return `还差￥${diff}元起送`;

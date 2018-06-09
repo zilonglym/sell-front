@@ -19,7 +19,7 @@
       <div class="foods-wrapper" ref="foodsWrapper">
         <ul><!--大类-->
           <div id="search"  class="search-item">
-            <input id="searchinput" type="text" class="search" value="" placeholder="  搜索" v-model.trim="title"/>
+            <input id="searchinput" type="text" class="search" value="" placeholder="                        搜索" v-model.trim="title"/>
           </div>
           <li v-for="item in goods" class="food-list" ref="foodList">
             <h1 class="title">{{item.name}}</h1>
@@ -317,15 +317,15 @@
         display: table
         height: 34px
         width: 56px
-        padding: 0 12px
-        line-height: 14px
+        padding: 0 8px
+        line-height: 20px
         &.current
           position: relative
           z-index: 10
           margin-top: -1px
           font-weight: 700
-          .text
-            border-none()
+          // .text
+          //   border-none()
         // .icon
         //   display: inline-block
         //   vertical-align: top
@@ -349,7 +349,7 @@
           width: 56px
           vertical-align: middle
           border-1px(rgba(7, 17, 27, 0.1))
-          font-size: 12px
+          font-size: 14px
     .foods-wrapper
       flex: 1
       .title
@@ -409,7 +409,8 @@
         border-1px(rgba(27, 17, 27, 0.1))
         .search
           width: 100%
-          height: 20px
+          height: 30px
+          font-weight: 500
           text-align: left;
           border-radius: 5px
 </style>
