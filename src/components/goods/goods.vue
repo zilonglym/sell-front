@@ -122,9 +122,9 @@
           document.cookie = 'openid=' + openid + ";expires=" + exp.toGMTString();
       }
       //获取openid
-      // if(getCookie('openid') == null) {
-      //     location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
-      // }
+      if(getCookie('openid') == null) {
+          location.href = config.openidUrl + '?returnUrl=' +  encodeURIComponent(config.sellUrl + '/#/');
+      }
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       let selectedGoods = window.selectedGoods;
       selectedGoods = selectedGoods ? JSON.parse(selectedGoods) : [];
@@ -157,6 +157,7 @@
     methods: {
       toshow(val,content){
         //console.log(this.$store.state.searchContent);
+        // console.log('1');
         return val.indexOf(this.$store.state.searchContent)>-1;
       },
       async fetchData(val) {
@@ -212,6 +213,11 @@
         prefoodnumber += subindex;
         let foodsubList = this.$refs.foodsubList;
         let el = foodsubList[prefoodnumber];
+        this.foodsScroll.scrollToElement(el, 300);
+      },
+      toTop(){
+        let foodList = this.$refs.foodList;
+        let el = foodList[0];
         this.foodsScroll.scrollToElement(el, 300);
       },
       childCheck(index){

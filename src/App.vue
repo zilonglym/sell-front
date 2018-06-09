@@ -3,7 +3,7 @@
     <template v-if="showHeader">
       <v-header :seller="seller"></v-header>
           <div id="search"  class="search-item">
-            <input id="searchinput" type="text" class="search" value="" placeholder="搜索" v-model.trim="title"/>
+            <input id="searchinput" type="text" style="border-radius: 20px;" class="search" value="" placeholder="搜索" v-model.trim="title"/>
           </div>
       <div class="tab border-1px">
         <div class="tab-item">
@@ -100,14 +100,21 @@
   @import "./common/stylus/mixin.styl"
 
   .search-item
-    font-size: 14px
+    display: flex; 
+    height:36px;
     border-1px(rgba(27, 17, 27, 0.1))
     .search
-      width: 100%
-      height: 30px
-      font-weight: 500
       text-align: center;
-      border-radius: 5px
+      border: 0px solid #444444;
+      height:24px;
+      margin: 6px 15px 6px 15px;
+      width:100%;
+      // padding-left:0px; 
+      background-color:#F0F0F0;
+      // background:url(images/Contact_05.jpg) no-repeat right top; 
+      font-size:15px;
+      font-weight: 500;
+
   .tab
     display: flex
     width: 100%
